@@ -14,6 +14,7 @@ import Notes from '../models'
 import StyledCheckBox from '../components/base/StyledCheckBox'
 import StyledRadioButton from '../components/base/StyledRadioButton'
 import ItemRadioButton from '../components/base/ItemRadioButton'
+import ColorSelector from '../features/component/ColorSelector'
 
 interface EditNoteProps {
   isVisible: boolean
@@ -53,7 +54,32 @@ const DetailsScreen = (props : EditNoteProps) => {
     // navigate(TAB_NAVIGATION_ROOT.HOME_ROUTE.HOME_SCREEN,{newNote: { title: newTitle, description: newDescription }})
   };
 
- 
+  const [backgroundColor, setBackgroundColor] = useState('white');
+
+  const handleColorSelection = (color) => {
+    switch (color) {
+      case 'yellow':
+        setBackgroundColor('yellow');
+        break;
+      case 'gray':
+        setBackgroundColor('gray');
+        break;
+      case 'purple':
+        setBackgroundColor('purple');
+        break;
+      case 'red':
+        setBackgroundColor('red');
+        break;
+      case 'green':
+        setBackgroundColor('green');
+        break;
+      case 'blue':
+        setBackgroundColor('blue');
+        break;
+      default:
+        setBackgroundColor('white');
+    }
+  };
 
   return (
     <View>
@@ -72,14 +98,18 @@ const DetailsScreen = (props : EditNoteProps) => {
     </StyledTouchable>
     </View>
     </View>
+    <View style={{backgroundColor : backgroundColor}}>
     <View style={styles.title}>
        <TextInput style={styles.inputTitle} value={newTitle} onChangeText={handleNewTitleChange} placeholder='Input Title' />
     </View>
     <View style={styles.Description}>
        <TextInput style={styles.inputDes} value={newDescription} onChangeText={handleNewDescriptionChange} placeholder='Input Description' />
        <NoteList notes={notes} />
+       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ColorSelector onColorSelected={handleColorSelection}  />
     </View>
-   
+    </View>
+    </View>
     </View>
   )
 }
@@ -98,7 +128,8 @@ const styles = StyleSheet.create({
       },
       inputTitle : {
         fontSize : 25,
-        fontWeight : 'bold'
+        fontWeight : 'bold',
+    
       },
       inputDes : {
         fontSize : 16
@@ -106,7 +137,7 @@ const styles = StyleSheet.create({
       Description : {
         marginLeft : 30,
         width : '100%',
-        height : '100%',
+        height : 500,
         
       },
       saveButton : {
